@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DietDash – Diet-friendly Alternatives For Your Favorite Dishes</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23f59e0b'>🍽️</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -372,69 +373,56 @@
         });
       });
       
-      // Find recipes button handler
+   // Find recipes button handler
       findRecipesBtn.addEventListener('click', function() {
-          const dish = dishInput.value.trim();
+        const dish = dishInput.value.trim();
+        
+        if (!dish) {
+          alert('Please enter a dish name');
+          return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        recipeResults.classList.add('hidden');
+        
+        // Make API call to backend
+        fetch('/get-recipes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dish_name: dish,
+            dietary_preference: currentDietaryPreference,
+            healthy_option: healthyCheckbox.checked
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Hide loading indicator
+          loadingIndicator.style.display = 'none';
           
-          if (!dish) {
-              alert('Please enter a dish name');
-              return;
+          if (data.success) {
+            // Update dish name
+            dishName.textContent = dish;
+            
+            // Display recipes
+            displayRecipes(data.recipes);
+            
+            // Show results section
+            recipeResults.classList.remove('hidden');
+            
+            // Scroll to results
+            recipeResults.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            alert('Error: ' + data.error);
           }
-          
-          // Show loading indicator
-          loadingIndicator.style.display = 'block';
-          recipeResults.classList.add('hidden');
-          
-          // Set timeout for the request
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-              controller.abort();
-          }, 10000); // 10 seconds
-          
-          // Make API call to backend
-          fetch('/get-recipes', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  dish_name: dish,
-                  dietary_preference: currentDietaryPreference,
-                  healthy_option: healthyCheckbox.checked
-              }),
-              signal: controller.signal
-          })
-          .then(response => response.json())
-          .then(data => {
-              clearTimeout(timeoutId);
-              // Hide loading indicator
-              loadingIndicator.style.display = 'none';
-              
-              if (data.success) {
-                  // Update dish name
-                  dishName.textContent = dish;
-                  
-                  // Display recipes
-                  displayRecipes(data.recipes);
-                  
-                  // Show results section
-                  recipeResults.classList.remove('hidden');
-                  
-                  // Scroll to results
-                  recipeResults.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                  alert('Error: ' + data.error);
-              }
-          })
-          .catch(error => {
-              clearTimeout(timeoutId);
-              loadingIndicator.style.display = 'none';
-              if (error.name === 'AbortError') {
-                  alert('Request took too long. Please try again.');  // ← Changed this line
-              } else {
-                  alert('Error fetching recipes: ' + error.message);
-              }
-          });
+        })
+        .catch(error => {
+          loadingIndicator.style.display = 'none';
+          alert('Error fetching recipes: ' + error);
+        });
       });
       
       function displayRecipes(recipes) {
