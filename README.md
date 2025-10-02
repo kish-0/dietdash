@@ -1,15 +1,15 @@
 
-# HealthyDash 🥗
+# DietDash 🥗
 
 [![Flask](https://img.shields.io/badge/Flask-2.3.3-green.svg)](https://flask.palletsprojects.com/)
 [![Python](https://img.shields.io/badge/Python-3.6+-blue.svg)](https://python.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg)](https://tailwindcss.com)
 
-AI-powered healthy recipe alternatives generator. Transform your favorite dishes into nutritious versions using Google Gemini AI.
+AI-powered diet-friendly recipe alternatives generator. Transform your favorite dishes into nutritious versions using Google Gemini AI.
 
 ## 🌟 Features
 
-- **🤖 AI-Powered Recipes**: Generate healthy alternatives using Google Gemini AI
+- **🤖 AI-Powered Recipes**: Generate diet-friendly alternatives using Google Gemini AI
 - **🍽️ Dietary Preferences**: Support for Non-Veg, Veg, and Jain dietary restrictions
 - **📊 Nutrition Tracking**: Detailed calorie, protein, carbs, and fat information
 - **⏱️ Cook Time & Difficulty**: Practical cooking instructions with time estimates
@@ -26,8 +26,8 @@ AI-powered healthy recipe alternatives generator. Transform your favorite dishes
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/kish-0/healthydash.git
-   cd healthydash
+   git clone https://github.com/kish-0/dietdash
+   cd dietdash
    ```
 
 2. **Install dependencies**
@@ -59,7 +59,7 @@ AI-powered healthy recipe alternatives generator. Transform your favorite dishes
 ## 📁 Project Structure
 
 ```
-healthydash/
+dietdash/
 ├── app.py              # Main Flask application
 ├── requirements.txt    # Python dependencies
 ├── .env               # Environment variables (ignored in git)
@@ -71,16 +71,16 @@ healthydash/
 
 ## 🎯 How It Works
 
-1. **Input Your Dish**: Enter any dish you want to make healthier
+1. **Input Your Dish**: Enter any dish you want to make diet-friendly
 2. **Choose Preferences**: Select dietary preference (Non-Veg/Veg/Jain)
-3. **AI Processing**: Gemini AI generates 3 healthy alternatives
+3. **AI Processing**: Gemini AI generates 3 diet-friendly alternatives
 4. **Get Results**: Receive recipes with ingredients, instructions, and nutrition facts
 
 ## 🍕 Example Usage
 
 - Input: "Butter Chicken"
 - Dietary Preference: "Non-Veg" 
-- Output: 3 healthier butter chicken recipes with reduced calories and balanced nutrition
+- Output: 3 diet-friendly butter chicken recipes with reduced calories and balanced nutrition
 
 ## 🔧 API Endpoints
 
@@ -113,7 +113,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Kishan S**
 - GitHub: [@kish-0](https://github.com/kish-0)
-- Project Link: [https://github.com/kish-0/healthydash](https://github.com/kish-0/healthydash)
+- Project Link: [https://github.com/kish-0/dietdash](https://github.com/kish-0/dietdash)
 
 ## 🙏 Acknowledgments
 
