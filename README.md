@@ -93,7 +93,18 @@ dietdash/
 
 ## 📸 Screenshots
 
-[Add screenshots of your application here]
+### Desktop Interface
+<p align="center">
+  <img src="screenshots/landing.png" width="45%" alt="Desktop Main Page">
+  <img src="screenshots/result.png" width="45%" alt="Desktop Recipe Results">
+</p>
+
+### Mobile Interface  
+<p align="center">
+  <img src="screenshots/mobileLanding.png" width="30%" alt="Mobile Main Page">
+  <img src="screenshots/mobileResult1.png" width="30%" alt="Mobile Recipe Results">
+  <img src="screenshots/mobileResult2.png" width="30%" alt="Mobile Recipe Results">
+</p>
 
 ## 🤝 Contributing
 
