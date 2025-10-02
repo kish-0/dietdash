@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthyDash – Healthy Alternatives For Your Favorite Dishes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .hero-bg {
+      background: linear-gradient(to right, #fbf37c, #eab977);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" opacity="0.1"><path d="M150,150 Q200,100 250,150 T350,150" stroke="%23000" fill="none" stroke-width="3"/><circle cx="500" cy="200" r="40" fill="none" stroke="%23000" stroke-width="3"/><rect x="700" y="100" width="80" height="80" fill="none" stroke="%23000" stroke-width="3"/><polygon points="900,150 950,100 1000,150 950,200" fill="none" stroke="%23000" stroke-width="3"/><path d="M200,400 Q250,350 300,400 T400,400" stroke="%23000" fill="none" stroke-width="3"/><circle cx="550" cy="450" r="40" fill="none" stroke="%23000" stroke-width="3"/><rect x="750" y="350" width="80" height="80" fill="none" stroke="%23000" stroke-width="3"/><polygon points="950,400 1000,350 1050,400 1000,450" fill="none" stroke="%23000" stroke-width="3"/><path d="M100,300 Q150,250 200,300 T300,300" stroke="%23000" fill="none" stroke-width="3"/><circle cx="450" cy="350" r="40" fill="none" stroke="%23000" stroke-width="3"/></svg>');
+      background-size: cover;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    
+    .dish-input {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+    }
+    
+    .dietary-preference {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dietary-preference.active {
+      background-color: #f59e0b;
+      color: white;
+    }
+    
+    .dietary-preference:not(.active):hover {
+      background-color: #fef3c7;
+    }
+    
+    .healthy-checkbox {
+      accent-color: #f59e0b;
+    }
+    
+    .recipe-card {
+      display: none;
+    }
+    
+    .recipe-card.active {
+      display: block;
+    }
+    
+    .loading {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-yellow-50">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-4 sticky top-0 z-50">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <span class="text-2xl font-bold text-yellow-600">HealthyDash</span>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#features" class="text-gray-700 hover:text-yellow-600 transition">Features</a>
+        <a href="#how-it-works" class="text-gray-700 hover:text-yellow-600 transition">How It Works</a>
+        <a href="#testimonials" class="text-gray-700 hover:text-yellow-600 transition">Testimonials</a>
+        <a href="#faq" class="text-gray-700 hover:text-yellow-600 transition">FAQ</a>
+      </div>
+      <div>
+        <a href="#get-started" class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg shadow hover:bg-yellow-600 transition">Try Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-bg text-gray-800 py-20">
+    <div class="container mx-auto px-4 text-center hero-content">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 floating">Transform Your Favorite Dishes Into Healthy Alternatives</h1>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">HealthyDash AI creates nutritious versions of your favorite meals based on your dietary preferences. Enjoy your favorites guilt-free!</p>
+      <a href="#get-started" class="bg-yellow-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-600 transition pulse inline-block">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Get Started Section -->
+  <section id="get-started" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">What Dish Would You Like To Make Healthier?</h2>
+      <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 dish-input">
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="dish">
+            Enter the name of your favorite dish:
+          </label>
+          <input type="text" id="dish" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="e.g., Pepperoni pizza, Butter chicken, Chocolate cake">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Dietary Preferences:
+          </label>
+          <div class="flex flex-wrap gap-2 mb-4" id="dietary-preferences">
+            <span class="dietary-preference bg-yellow-500 text-white px-3 py-1 rounded-full text-sm active" data-pref="Non-Veg">Non-Veg</span>
+            <span class="dietary-preference bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm" data-pref="Veg">Veg</span>
+            <span class="dietary-preference bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm" data-pref="Jain">Jain</span>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="healthy" class="healthy-checkbox h-5 w-5 rounded" checked>
+            <label for="healthy" class="ml-2 text-gray-700 text-sm font-bold">Make it healthy</label>
+          </div>
+        </div>
+        <button id="find-recipes" class="w-full bg-yellow-500 text-white font-bold py-3 px-4 rounded-lg shadow hover:bg-yellow-600 transition">
+          Find Healthy Alternatives
+        </button>
+        <p class="text-center text-gray-600 mt-4">Try: "Pepperoni pizza" or "Butter chicken" or "Chocolate cake"</p>
+      </div>
+      
+      <!-- Loading Indicator -->
+      <div id="loading" class="loading max-w-2xl mx-auto mt-8 text-center">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+        <p class="mt-4 text-gray-600">Finding healthy alternatives for your dish...</p>
+      </div>
+      
+      <!-- Recipe Results -->
+      <div id="recipe-results" class="max-w-6xl mx-auto mt-12 hidden">
+        <h3 class="text-2xl font-bold text-center mb-8">Healthy Alternatives For <span id="dish-name" class="text-yellow-600"></span></h3>
+        
+        <div id="recipes-container" class="grid md:grid-cols-3 gap-6">
+          <!-- Recipe cards will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-yellow-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Why HealthyDash?</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow feature-card">
+          <div class="text-4xl mb-4">🥗</div>
+          <h3 class="text-xl font-semibold mb-3">Healthier Versions</h3>
+          <p class="text-gray-600">Transform your favorite comfort foods into nutritious meals without sacrificing flavor. Our AI creates balanced alternatives.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow feature-card">
+          <div class="text-4xl mb-4">🧠</div>
+          <h3 class="text-xl font-semibold mb-3">Smart AI</h3>
+          <p class="text-gray-600">Our AI understands your dietary preferences and creates customized healthy versions of any dish you love.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow feature-card">
+          <div class="text-4xl mb-4">📊</div>
+          <h3 class="text-xl font-semibold mb-3">Nutrition Info</h3>
+          <p class="text-gray-600">Get detailed nutritional information for each alternative so you can make informed choices about your meals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="bg-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-12">How It Works</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-6">
+          <div class="text-6xl mb-4 floating">🍕</div>
+          <h3 class="text-xl font-semibold mb-2">Enter Your Dish</h3>
+          <p class="text-gray-600">Tell us what dish you'd like to make healthier. Our AI will analyze the traditional recipe and ingredients.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-6xl mb-4 floating" style="animation-delay: 0.5s;">🤖</div>
+          <h3 class="text-xl font-semibold mb-2">AI Creates Alternatives</h3>
+          <p class="text-gray-600">Our AI instantly generates healthier versions tailored to your dietary preferences and health goals.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-6xl mb-4 floating" style="animation-delay: 1s;">🥗</div>
+          <h3 class="text-xl font-semibold mb-2">Cook & Enjoy</h3>
+          <p class="text-gray-600">Follow easy step-by-step instructions to create your healthier alternative. Enjoy your favorite dishes guilt-free!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="bg-yellow-100 py-20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xl">AK</div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Arun Kumar</h4>
+              <div class="flex text-yellow-400">★★★★★</div>
+            </div>
+          </div>
+          <p class="text-gray-600">"HealthyDash helped me enjoy pizza again without guilt! The healthy alternatives are delicious and easy to make."</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xl">VS</div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Vinod S</h4>
+              <div class="flex text-yellow-400">★★★★★</div>
+            </div>
+          </div>
+          <p class="text-gray-600">"As someone trying to eat healthier, this app is a game-changer. I can still enjoy my favorite dishes with nutritious alternatives."</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xl">DJ</div>
+            <div class="ml-4">
+              <h4 class="font-semibold">Dhruv Jain</h4>
+              <div class="flex text-yellow-400">★★★★☆</div>
+            </div>
+          </div>
+          <p class="text-gray-600">"The Jain-friendly healthy alternatives have been fantastic. I love how it respects my dietary restrictions while making food healthier."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20 bg-white">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <div class="bg-yellow-50 p-6 rounded-lg">
+          <h3 class="font-semibold text-lg mb-2">How accurate are the healthy alternatives?</h3>
+          <p class="text-gray-600">Our AI has been trained on thousands of recipes and nutritional data, making it highly accurate at creating healthier versions of your favorite dishes while maintaining flavor.</p>
+        </div>
+        <div class="bg-yellow-50 p-6 rounded-lg">
+          <h3 class="font-semibold text-lg mb-2">Is HealthyDash free to use?</h3>
+          <p class="text-gray-600">Yes! The basic version of HealthyDash is completely free. We offer a premium subscription with additional features like detailed nutritional analysis and meal planning.</p>
+        </div>
+        <div class="bg-yellow-50 p-6 rounded-lg">
+          <h3 class="font-semibold text-lg mb-2">Can I save recipes for later?</h3>
+          <p class="text-gray-600">Absolutely! You can create an account to save your favorite healthy alternatives, create collections, and even generate shopping lists for ingredients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Call to Action -->
+  <section class="py-20 text-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-6">Ready to Eat Healthier Without Sacrificing Taste?</h2>
+      <p class="mb-8 text-xl max-w-2xl mx-auto">Join thousands of health-conscious food lovers who are enjoying their favorite dishes guilt-free with HealthyDash AI.</p>
+      <a href="#get-started" class="bg-white text-yellow-600 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition pulse inline-block">Start Transforming Dishes Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-200 py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold text-white mb-4">HealthyDash</h3>
+          <p>Transforming your favorite dishes into healthy alternatives with the power of AI.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Product</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Features</a></li>
+            <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">About</a></li>
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p>&copy; 2025 HealthyDash. All rights reserved.</p>
+        <p class="text-sm mt-2">Made with ❤️ by your friendly AI chef</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dietaryPreferences = document.querySelectorAll('.dietary-preference');
+      const findRecipesBtn = document.getElementById('find-recipes');
+      const recipeResults = document.getElementById('recipe-results');
+      const dishName = document.getElementById('dish-name');
+      const dishInput = document.getElementById('dish');
+      const loadingIndicator = document.getElementById('loading');
+      const recipesContainer = document.getElementById('recipes-container');
+      const healthyCheckbox = document.getElementById('healthy');
+      
+      let currentDietaryPreference = 'Non-Veg';
+      
+      // Dietary preferences handling
+      dietaryPreferences.forEach(pref => {
+        pref.addEventListener('click', function() {
+          dietaryPreferences.forEach(p => {
+            p.classList.remove('active', 'bg-yellow-500', 'text-white');
+            p.classList.add('bg-yellow-100', 'text-yellow-800');
+          });
+          
+          this.classList.remove('bg-yellow-100', 'text-yellow-800');
+          this.classList.add('active', 'bg-yellow-500', 'text-white');
+          currentDietaryPreference = this.getAttribute('data-pref');
+        });
+      });
+      
+      // Find recipes button handler
+      findRecipesBtn.addEventListener('click', function() {
+        const dish = dishInput.value.trim();
+        
+        if (!dish) {
+          alert('Please enter a dish name');
+          return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        recipeResults.classList.add('hidden');
+        
+        // Make API call to backend
+        fetch('/get-recipes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dish_name: dish,
+            dietary_preference: currentDietaryPreference,
+            healthy_option: healthyCheckbox.checked
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Hide loading indicator
+          loadingIndicator.style.display = 'none';
+          
+          if (data.success) {
+            // Update dish name
+            dishName.textContent = dish;
+            
+            // Display recipes
+            displayRecipes(data.recipes);
+            
+            // Show results section
+            recipeResults.classList.remove('hidden');
+            
+            // Scroll to results
+            recipeResults.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            alert('Error: ' + data.error);
+          }
+        })
+        .catch(error => {
+          loadingIndicator.style.display = 'none';
+          alert('Error fetching recipes: ' + error);
+        });
+      });
+      
+      function displayRecipes(recipes) {
+        recipesContainer.innerHTML = '';
+        
+        recipes.forEach((recipe, index) => {
+          const recipeCard = document.createElement('div');
+          recipeCard.className = 'bg-white rounded-xl shadow-lg overflow-hidden';
+          recipeCard.innerHTML = `
+            <div class="p-6">
+              <h4 class="text-xl font-bold mb-3 text-yellow-700">${recipe.name}</h4>
+              
+              <div class="flex justify-between items-center mb-4 text-sm">
+                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">${recipe.difficulty}</span>
+                <span class="text-gray-600">⏱️ ${recipe.cook_time} mins</span>
+              </div>
+              
+              <div class="mb-4">
+                <h5 class="font-semibold mb-2">Ingredients:</h5>
+                <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
+                  ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                </ul>
+              </div>
+              
+              <div class="mb-4">
+                <h5 class="font-semibold mb-2">Instructions:</h5>
+                <ol class="text-sm text-gray-600 list-decimal list-inside space-y-1">
+                  ${recipe.instructions.map((step, i) => `<li>${step}</li>`).join('')}
+                </ol>
+              </div>
+              
+              <div class="border-t pt-3">
+                <h5 class="font-semibold mb-2">Nutrition (per serving):</h5>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                  <div class="text-center bg-green-50 p-2 rounded">
+                    <div class="font-bold text-green-700">${recipe.nutrition_info.calories}</div>
+                    <div class="text-xs text-gray-600">Calories</div>
+                  </div>
+                  <div class="text-center bg-blue-50 p-2 rounded">
+                    <div class="font-bold text-blue-700">${recipe.nutrition_info.protein_g}g</div>
+                    <div class="text-xs text-gray-600">Protein</div>
+                  </div>
+                  <div class="text-center bg-purple-50 p-2 rounded">
+                    <div class="font-bold text-purple-700">${recipe.nutrition_info.carbs_g}g</div>
+                    <div class="text-xs text-gray-600">Carbs</div>
+                  </div>
+                  <div class="text-center bg-orange-50 p-2 rounded">
+                    <div class="font-bold text-orange-700">${recipe.nutrition_info.fat_g}g</div>
+                    <div class="text-xs text-gray-600">Fat</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          recipesContainer.appendChild(recipeCard);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
