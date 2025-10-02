@@ -89,7 +89,7 @@ dietdash/
 
 ## 🌐 Live Demo
 
-[Add your deployment link here]
+[**🚀 Try DietDash Live**](https://dietdash.up.railway.app/)
 
 ## 📸 Screenshots
 
