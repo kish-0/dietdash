@@ -24,7 +24,7 @@
         });
       });
       
-   // Find recipes button handler
+  
       findRecipesBtn.addEventListener('click', function() {
         const dish = dishInput.value.trim();
         
@@ -33,11 +33,11 @@
           return;
         }
         
-        // Show loading indicator
+
         loadingIndicator.style.display = 'block';
         recipeResults.classList.add('hidden');
         
-        // Make API call to backend
+        // API call to backend
         fetch('/get-recipes', {
           method: 'POST',
           headers: {
@@ -51,20 +51,15 @@
         })
         .then(response => response.json())
         .then(data => {
-          // Hide loading indicator
           loadingIndicator.style.display = 'none';
           
           if (data.success) {
-            // Update dish name
             dishName.textContent = dish;
             
-            // Display recipes
             displayRecipes(data.recipes);
             
-            // Show results section
             recipeResults.classList.remove('hidden');
             
-            // Scroll to results
             recipeResults.scrollIntoView({ behavior: 'smooth' });
           } else {
             alert('Error: ' + data.error);

@@ -19,7 +19,7 @@ class RecipeGenerator:
     def generate_recipes(self, dish_name, dietary_preference, healthy_option):
         """Generate recipes using Gemini AI"""
         
-        # Build prompt
+        
         health_text = " The recipes should be healthier alternatives with lower calories, balanced nutrition, and light cooking methods." if healthy_option else ""
         
         prompt = f"""
@@ -64,21 +64,21 @@ class RecipeGenerator:
         
         try:
             response = client.models.generate_content(
-                model="gemini-2.0-flash-exp",  # Using a more available model
+                model="gemini-2.0-flash-exp",  
                 contents=prompt
             )
             
-            # Extract JSON from response
+            # Extract JSON 
             result_text = response.text
             
-            # Clean the response to extract JSON
+            # Cleaning the response
             json_match = re.search(r'\[.*\]', result_text, re.DOTALL)
             if json_match:
                 json_str = json_match.group()
                 recipes = json.loads(json_str)
                 return recipes
             else:
-                # Fallback: return sample data if JSON parsing fails
+                # Fallback
                 return self._get_sample_recipes(dish_name, dietary_preference)
                 
         except Exception as e:
@@ -129,7 +129,7 @@ class RecipeGenerator:
             }
         ]
 
-# Initialize recipe generator
+
 recipe_generator = RecipeGenerator()
 
 @app.route('/')
@@ -147,7 +147,7 @@ def get_recipes():
         if not dish_name:
             return jsonify({'success': False, 'error': 'Please enter a dish name'})
         
-        # Generate recipes using AI
+        
         recipes = recipe_generator.generate_recipes(dish_name, dietary_preference, healthy_option)
         
         return jsonify({
@@ -160,5 +160,5 @@ def get_recipes():
         return jsonify({'success': False, 'error': str(e)})
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))  # Default to 8080 since that works
+    port = int(os.environ.get("PORT", 8080))  # 8080 - works
     app.run(host='0.0.0.0', port=port, debug=False)
